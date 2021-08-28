@@ -985,6 +985,29 @@ class Sumcoin(Coin):
     PEERS = []
 
 
+
+class Nyancoin(Coin):
+    NAME = "Nyancoin"
+    SHORTNAME = "NYAN"
+    NET = "mainnet"
+    #XPUB_VERBYTES = bytes.fromhex("0466b00b")
+    #XPRV_VERBYTES = bytes.fromhex("0466babe")
+    P2PKH_VERBYTE = bytes.fromhex("2D")
+    #P2SH_VERBYTES = (bytes.fromhex("35"), bytes.fromhex("11"))
+    WIF_BYTE = bytes.fromhex("05")
+    GENESIS_HASH = ('b477d9bc0721a1b96547495404583d68123f471fdd1d4058a9adff2fa7452298')
+    DESERIALIZER = lib_tx.Deserializer
+    DAEMON = daemon.LegacyRPCDaemon
+    TX_COUNT = 6000000
+    TX_COUNT_HEIGHT = 3868869
+    TX_PER_BLOCK = 10
+    RPC_PORT = 33700
+    REORG_LIMIT = 800
+    PEERS = [
+        'luna.catgirl.biz',
+    ]
+
+
 class Litecoin(Coin):
     NAME = "Litecoin"
     SHORTNAME = "LTC"
