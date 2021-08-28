@@ -11,9 +11,8 @@ RUN apt-get update \
         librocksdb-dev libsnappy-dev libbz2-dev libz-dev liblz4-dev python3-dev python3-virtualenv \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m venv venv 
-
 COPY . .
+
 RUN pip3 install rocksdb
 RUN python3 setup.py install
 
@@ -38,7 +37,7 @@ VOLUME /var/lib/electrumx
 
 RUN mkdir -p "$DB_DIRECTORY" && ulimit -n 1048576
 
-CMD ["python3", "/usr/src/app/venv/bin/electrumx_server"]
+CMD ["python3", "electrumx_server"]
 
 # build it with eg.: `docker build -t electrumx .`
 # run it with eg.:
