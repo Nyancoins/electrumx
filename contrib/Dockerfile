@@ -8,18 +8,18 @@ WORKDIR /usr/src/app
 # Install the libs needed by rocksdb (including development headers)
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
-        librocksdb-dev libsnappy-dev libbz2-dev libz-dev liblz4-dev \
+        librocksdb-dev libsnappy-dev libbz2-dev libz-dev liblz4-dev python3-dev python3-virtualenv \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python -m venv venv \
-    && venv/bin/pip install --no-cache-dir e-x[rapidjson,rocksdb]==1.16.0
+RUN python3 -m venv venv 
 
+COPY . .
+RUN pip3 install rocksdb
+RUN python3 setup.py install
 
-FROM python:3.9.4-slim-buster
 
 # Install the libs needed by rocksdb (no development headers or statics)
-RUN apt-get update \
-    && apt-get -y --no-install-recommends install \
+RUN apt-get -y --no-install-recommends install \
         librocksdb5.17 libsnappy1v5 libbz2-1.0 zlib1g liblz4-1 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -33,14 +33,12 @@ ENV MAX_SEND=10000000
 ENV BANDWIDTH_UNIT_COST=50000
 ENV CACHE_MB=2000
 
-WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app .
 
 VOLUME /var/lib/electrumx
 
 RUN mkdir -p "$DB_DIRECTORY" && ulimit -n 1048576
 
-CMD ["/usr/src/app/venv/bin/python", "/usr/src/app/venv/bin/electrumx_server"]
+CMD ["python3", "/usr/src/app/venv/bin/electrumx_server"]
 
 # build it with eg.: `docker build -t electrumx .`
 # run it with eg.:
