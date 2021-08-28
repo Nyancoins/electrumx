@@ -1007,6 +1007,10 @@ class Nyancoin(Coin):
         'luna.catgirl.biz',
     ]
 
+    @classmethod
+    def max_fetch_blocks(cls, height):
+        return 10
+
 
 class Litecoin(Coin):
     NAME = "Litecoin"
