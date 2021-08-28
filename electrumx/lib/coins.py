@@ -1002,7 +1002,7 @@ class Nyancoin(Coin):
     TX_COUNT_HEIGHT = 3868869
     TX_PER_BLOCK = 10
     RPC_PORT = 33700
-    REORG_LIMIT = 800
+    REORG_LIMIT = 120
     PEERS = [
         'luna.catgirl.biz',
     ]
